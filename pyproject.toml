@@ -1,0 +1,9 @@
+[project]
+name = "advent-of-code-2025"
+version = "0.1.0"
+description = "🎄Advent of Code 2025 🎅"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "elf>=1.0.0",
+]
