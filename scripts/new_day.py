@@ -4,6 +4,8 @@ import argparse
 from pathlib import Path
 from typing import Final
 
+import elf
+
 DEFAULT_YEAR: Final[int] = 2025
 REPO_ROOT: Final[Path] = Path(__file__).resolve().parents[1]
 SCRIPTS_DIR: Final[Path] = Path(__file__).resolve().parent
@@ -57,6 +59,11 @@ def create_day(day: int, year: int) -> Path:
         path = day_dir / name
         if not path.exists():
             path.write_text("", encoding="utf-8")
+    input_data = elf.get_puzzle_input(year, day)
+    if input_data:
+        input_path = day_dir / "input.txt"
+        input_path.write_text(input_data, encoding="utf-8")
+        print(f"✅ Wrote puzzle input to {input_path}")
 
     return solve_file
 
