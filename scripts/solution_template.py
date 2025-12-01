@@ -44,7 +44,9 @@ def main() -> None:
     input_file_name = "test_input.txt" if TEST else "input.txt"
     input_path = BASE_DIR / input_file_name
 
-    raw_input = helpers.read_test_input(input_path)
+    with open(input_path, "r", encoding="utf-8") as f:
+        raw_input = f.read()
+
     data_lines = helpers.parse_input(raw_input)
 
     print(f"🎄 Advent of Code {YEAR} - Day {DAY:02d}\n")
