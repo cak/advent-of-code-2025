@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from pathlib import Path
 from typing import Literal
 
@@ -44,8 +42,7 @@ def main() -> None:
     input_file_name = "test_input.txt" if TEST else "input.txt"
     input_path = BASE_DIR / input_file_name
 
-    with open(input_path, "r", encoding="utf-8") as f:
-        raw_input = f.read()
+    raw_input = helpers.read_input(input_path)
 
     data_lines = helpers.parse_input(raw_input)
 
@@ -55,12 +52,13 @@ def main() -> None:
     print("Part %d: %s\n" % (PART, result))
 
     if SUBMIT and not TEST:
-        submit_puzzle_answer(
+        submit_result = submit_puzzle_answer(
             year=YEAR,
             day=DAY,
             part=PART,
             answer=str(result),
         )
+        print(submit_result)
 
 
 if __name__ == "__main__":
