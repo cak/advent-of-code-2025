@@ -9,9 +9,9 @@ DAY: int = 3
 YEAR: int = 2025
 BASE_DIR: Path = Path(__file__).parent
 
-TEST: bool = True  # Set to False to use real input
+TEST: bool = False  # Set to False to use real input
 PART: Literal[1, 2] = 2  # 1 or 2
-SUBMIT: bool = True  # Set to True to submit the answer
+SUBMIT: bool = False  # Set to True to submit the answer
 
 
 def sort_digits_desc(n: int) -> int:
@@ -45,15 +45,15 @@ def part1(data: list[str]) -> int:
 
 def find_larges_battery(bank: list[int], excluded_index: int) -> int:
     """Find the largest battery in the bank excluding the given index."""
-    if len(bank) <= excluded_index - 1:
-        return bank[0]
 
-    safe_bank = bank[: excluded_index - 1]
+    safe_bank = (
+        bank[: len(bank) - (excluded_index - 1)] if excluded_index != 1 else bank[:]
+    )
+    soreted_safe_bank = sorted(safe_bank, reverse=True)
     if not safe_bank:
         safe_bank = bank
-    print(f"Safe bank (excluding index {excluded_index}): {safe_bank}")
 
-    return sorted(safe_bank, reverse=True)[0]
+    return soreted_safe_bank[0]
 
 
 @helpers.timer()
@@ -62,11 +62,9 @@ def part2(data: list[str]) -> int:
 
     banks = [[int(ch) for ch in data_line.strip()] for data_line in data]
 
-    sorted_banks = [sorted(bank, reverse=True) for bank in banks]
-
     batteries: list[int] = []
 
-    for bank, sorted_bank in zip(banks, sorted_banks):
+    for bank in banks:
         new_bank = bank
         bank_batteries: list[int] = []
         bank_range = min(12, len(new_bank))
@@ -77,9 +75,8 @@ def part2(data: list[str]) -> int:
                 bank_batteries.append(largest_battery)
                 break
             bank_batteries.append(largest_battery)
-            print(f"Selected battery: {largest_battery}, Remaining bank: {new_bank}")
 
-        print(bank_batteries)
+        batteries.append(int("".join(str(bat) for bat in bank_batteries)))
 
     return sum(batteries)
 
