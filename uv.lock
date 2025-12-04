@@ -80,7 +80,7 @@ wheels = [
 
 [[package]]
 name = "elf"
-version = "1.1.0"
+version = "1.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -89,9 +89,9 @@ dependencies = [
     { name = "rich" },
     { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b1/0f/adc1af8724d5e889bd73fff1c4b530ac02b098ec16299f39d158651b5a0b/elf-1.1.0.tar.gz", hash = "sha256:b71b2bcb7002767de6d6b67ce3ac8e7c318d3f484f31e62cf8014e436a9c2379", size = 38043, upload-time = "2025-12-01T13:47:20.885Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/fa/00/05b3fb326ba4d48721c472917f22321dae5784890a975a466fc950c322d2/elf-1.1.1.tar.gz", hash = "sha256:c838711313edb7825155f287c92c6828df3060c58e59a1ad63ada5cf82e03380", size = 38726, upload-time = "2025-12-04T10:07:04.009Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/2a/e8/e93fa4a61275d1beb0bf7b95434d6fd6b03861988ff77e915a1336eab368/elf-1.1.0-py3-none-any.whl", hash = "sha256:097d53a64ea34b4a5452d8e805f0645a8598b6042a0181d9fc2ac5651dba6c9a", size = 33603, upload-time = "2025-12-01T13:47:20.066Z" },
+    { url = "https://files.pythonhosted.org/packages/52/a7/6a0e61899aa081cf85048ec2a76cb856fc83e2fe51052d4c72fc56b4f239/elf-1.1.1-py3-none-any.whl", hash = "sha256:247fbaa5cbf39a8495eab1b7a44f61e9e12438f69b367d4b945f9c3e9d26a113", size = 33706, upload-time = "2025-12-04T10:07:02.526Z" },
 ]
 
 [[package]]
