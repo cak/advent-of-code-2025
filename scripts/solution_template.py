@@ -11,7 +11,7 @@ BASE_DIR: Path = Path(__file__).parent
 
 TEST: bool = True  # Set to False to use real input
 PART: Literal[1, 2] = 1  # 1 or 2
-SUBMIT: bool = False  # Set to True to submit the answer
+SUBMIT: bool = True  # Set to True to submit the answer
 
 
 @helpers.timer()
