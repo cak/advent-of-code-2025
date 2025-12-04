@@ -11,7 +11,7 @@ YEAR: int = 2025
 BASE_DIR: Path = Path(__file__).parent
 
 TEST: bool = False  # Set to False to use real input
-PART: Literal[1, 2] = 1  # 1 or 2
+PART: Literal[1, 2] = 2  # 1 or 2
 SUBMIT: bool = True  # Set to True to submit the answer
 
 
@@ -55,8 +55,48 @@ def part1(data: list[str]) -> int:
 @helpers.timer()
 def part2(data: list[str]) -> int:
     """Solve Part 2 of Day 04."""
-    # TODO: implement Part 2
-    return len(data)
+    paper_grid = [list(line.strip()) for line in data]
+    ROWS = len(paper_grid)
+    COLS = len(paper_grid[0])
+
+    rolls_assessable = 0
+
+    while True:
+        rolls_to_remove = []
+
+        for r, c in product(range(ROWS), range(COLS)):
+            roll = paper_grid[r][c]
+            if roll == ".":
+                continue
+            neighbors = []
+            if c + 1 < COLS:
+                neighbors.append(paper_grid[r][c + 1])
+            if c - 1 >= 0:
+                neighbors.append(paper_grid[r][c - 1])
+            if r + 1 < ROWS:
+                neighbors.append(paper_grid[r + 1][c])
+            if r - 1 >= 0:
+                neighbors.append(paper_grid[r - 1][c])
+            if r + 1 < ROWS and c + 1 < COLS:
+                neighbors.append(paper_grid[r + 1][c + 1])
+            if r + 1 < ROWS and c - 1 >= 0:
+                neighbors.append(paper_grid[r + 1][c - 1])
+            if r - 1 >= 0 and c + 1 < COLS:
+                neighbors.append(paper_grid[r - 1][c + 1])
+            if r - 1 >= 0 and c - 1 >= 0:
+                neighbors.append(paper_grid[r - 1][c - 1])
+
+            if neighbors.count("@") < 4:
+                rolls_assessable += 1
+                rolls_to_remove.append((r, c))
+
+        for r, c in rolls_to_remove:
+            paper_grid[r][c] = "."
+
+        if not rolls_to_remove:
+            break
+
+    return rolls_assessable
 
 
 def solve(part: Literal[1, 2], data: list[str]) -> int:
