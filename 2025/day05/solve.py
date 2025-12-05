@@ -9,7 +9,7 @@ DAY: int = 5
 YEAR: int = 2025
 BASE_DIR: Path = Path(__file__).parent
 
-TEST: bool = True  # Set to False to use real input
+TEST: bool = False  # Set to False to use real input
 PART: Literal[1, 2] = 1  # 1 or 2
 SUBMIT: bool = True  # Set to True to submit the answer
 
@@ -20,20 +20,16 @@ def part1(data: str) -> int:
     data_id_ranges = data.split("\n\n")
     id_ranges_raw, ids = data_id_ranges[0], data_id_ranges[1]
     id_ranges = [x.split("-") for x in id_ranges_raw.splitlines() if x]
-    id_ranges = [range(int(start), int(end) + 1) for start, end in id_ranges]
-    fresh_ids = [list(r) for r in id_ranges]
-    fresh_ids_set = set([item for sublist in fresh_ids for item in sublist])
 
     available_fresh_ids = []
 
-    for id_str in ids.splitlines():
-        if not id_str:
-            continue
-        id_num = int(id_str)
-        if id_num in fresh_ids_set:
-            available_fresh_ids.append(id_num)
-
-    print("Available fresh IDs:", available_fresh_ids)
+    for id in ids.splitlines():
+        id_value = int(id)
+        for id_range in id_ranges:
+            start, end = int(id_range[0]), int(id_range[1]) + 1
+            if id_value >= start and id_value <= end:
+                available_fresh_ids.append(id_value)
+                break
 
     return len(available_fresh_ids)
 
