@@ -10,7 +10,7 @@ YEAR: int = 2025
 BASE_DIR: Path = Path(__file__).parent
 
 TEST: bool = False  # Set to False to use real input
-PART: Literal[1, 2] = 1  # 1 or 2
+PART: Literal[1, 2] = 2  # 1 or 2
 SUBMIT: bool = True  # Set to True to submit the answer
 
 
@@ -37,8 +37,27 @@ def part1(data: str) -> int:
 @helpers.timer()
 def part2(data: str) -> int:
     """Solve Part 2 of Day 05."""
-    # TODO: implement Part 2
-    return len(data)
+    data_id_ranges = data.split("\n\n")
+    id_ranges_raw = data_id_ranges[0]
+    id_ranges = [x.split("-") for x in id_ranges_raw.splitlines() if x]
+    id_ranges = [(int(start), int(end)) for start, end in id_ranges]
+    sorted_id_ranges = sorted(id_ranges, key=lambda x: x[0])
+    fresh_ids = []
+
+    for id_range in sorted_id_ranges:
+        if not fresh_ids:
+            fresh_ids.append(id_range)
+            continue
+        last_start, last_end = fresh_ids[-1]
+        current_start, current_end = id_range
+        if current_start <= last_end:
+            fresh_ids[-1] = (last_start, max(last_end, current_end))
+        else:
+            fresh_ids.append(id_range)
+
+    fresh_ids_count = sum(end - start + 1 for start, end in fresh_ids)
+
+    return fresh_ids_count
 
 
 def solve(part: Literal[1, 2], data: str) -> int:
