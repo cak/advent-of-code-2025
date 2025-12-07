@@ -9,8 +9,8 @@ DAY: int = 7
 YEAR: int = 2025
 BASE_DIR: Path = Path(__file__).parent
 
-TEST: bool = True  # Set to False to use real input
-PART: Literal[1, 2] = 1  # 1 or 2
+TEST: bool = False  # Set to False to use real input
+PART: Literal[1, 2] = 2  # 1 or 2
 SUBMIT: bool = True  # Set to True to submit the answer
 
 
@@ -42,8 +42,31 @@ def part1(data: list[str]) -> int:
 @helpers.timer()
 def part2(data: list[str]) -> int:
     """Solve Part 2 of Day 07."""
-    # TODO: implement Part 2
-    return len(data)
+    diagram = [list(line) for line in data]
+    start = diagram[0].index("S")
+
+    indexes_rows = {(0, start): 1}
+    current_index_rows = {}
+    for row in diagram[1:]:
+        for r, index in indexes_rows:
+            if index < 0 or index >= len(row):
+                continue
+            previous_count = indexes_rows.get((r, index), 0)
+
+            if row[index] == "^":
+                count_l = current_index_rows.get((r + 1, index - 1), 0)
+                count_r = current_index_rows.get((r + 1, index + 1), 0)
+                current_index_rows[(r + 1, index - 1)] = count_l + previous_count
+                current_index_rows[(r + 1, index + 1)] = count_r + previous_count
+            else:
+                count = current_index_rows.get((r + 1, index), 0)
+                current_index_rows[(r + 1, index)] = count + previous_count
+        indexes_rows = current_index_rows
+        current_index_rows = {}
+
+    paths = sum(indexes_rows.values())
+
+    return paths
 
 
 def solve(part: Literal[1, 2], data: list[str]) -> int:
